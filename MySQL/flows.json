@@ -1,0 +1,1752 @@
+[
+    {
+        "id": "a474a45fb8e3907c",
+        "type": "tab",
+        "label": "Qurban Terpadu",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7a2c9aa2429beaf9",
+        "type": "ui_text_input",
+        "z": "a474a45fb8e3907c",
+        "name": "Masukkan Kode Pequrban ",
+        "label": "Masukkan Kode Pequrban ",
+        "tooltip": "",
+        "group": "ea3baa288a1b556d",
+        "order": 1,
+        "width": "5",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "a8f25e7dcd604e26",
+                "3effad7d3e35f125"
+            ]
+        ]
+    },
+    {
+        "id": "b805a9105eb5114a",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "d": true,
+        "group": "ea3baa288a1b556d",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "RFID",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 830,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "ef4c40f44ecb0022",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Berat",
+        "format": "{{msg.payload}} Kg",
+        "layout": "row-spread",
+        "className": "",
+        "x": 830,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d7c0918f6d96c7bf",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 12,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Waktu Pengukuran Terakhir",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 900,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "a8f25e7dcd604e26",
+        "type": "ui_button",
+        "z": "a474a45fb8e3907c",
+        "name": "Search",
+        "group": "ea3baa288a1b556d",
+        "order": 2,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-search",
+        "payload": "RFID",
+        "payloadType": "flow",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 440,
+        "y": 40,
+        "wires": [
+            [
+                "975a8a12873fc279"
+            ]
+        ]
+    },
+    {
+        "id": "3effad7d3e35f125",
+        "type": "change",
+        "z": "a474a45fb8e3907c",
+        "name": "Set Flow Kode Pequrban",
+        "rules": [
+            {
+                "t": "set",
+                "p": "Kode_P",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 390,
+        "y": 120,
+        "wires": [
+            [
+                "76685242a9b332e3"
+            ]
+        ]
+    },
+    {
+        "id": "76685242a9b332e3",
+        "type": "debug",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "975a8a12873fc279",
+        "type": "link out",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "f5e726562db50e8e",
+            "fc4674ffaa4f5dca"
+        ],
+        "x": 635,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "60af53c535ff7340",
+        "type": "mysql",
+        "z": "a474a45fb8e3907c",
+        "mydb": "a844720c.608d6",
+        "name": "Data",
+        "x": 430,
+        "y": 200,
+        "wires": [
+            [
+                "e8b9d56f36ff4f5d"
+            ]
+        ]
+    },
+    {
+        "id": "9d51283180659963",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "func": "let Kode_P = flow.get('Kode_P')\nmsg.topic = `SELECT * FROM manajemen JOIN lapangan ON lapangan.RFID = manajemen.RFID WHERE Kode_Pequrban=\"${Kode_P}\"`;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 200,
+        "wires": [
+            [
+                "60af53c535ff7340"
+            ]
+        ]
+    },
+    {
+        "id": "e8b9d56f36ff4f5d",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "func": "// let db_username = msg.payload[0].username\nlet RFID = msg.payload[0].RFID\nlet Waktu = msg.payload[0].Waktu\nlet Berat = msg.payload[0].Berat\nlet Suhu = msg.payload[0].Suhu\nlet Sehat = msg.payload[0].Sehat\nlet Kode_P = msg.payload[0].Kode_Pequrban\nlet Nama_P = msg.payload[0].Nama_Pequrban\nlet Kategori = msg.payload[0].Kategori\nlet R_Berat = msg.payload[0].Rentang_Berat\nlet PPD = msg.payload[0].Pengelola_Penyembelihan_dan_Distribusi\n\n\nreturn[{payload:RFID}, {payload:Waktu}, {payload:Berat}, {payload:Suhu}, {payload:Sehat},\n{payload:Kode_P}, {payload:Nama_P}, {payload:Kategori}, {payload:R_Berat}, {payload:PPD}] \n",
+        "outputs": 10,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 200,
+        "wires": [
+            [
+                "b805a9105eb5114a"
+            ],
+            [
+                "d7c0918f6d96c7bf"
+            ],
+            [
+                "ef4c40f44ecb0022"
+            ],
+            [
+                "de41ec645ced9670"
+            ],
+            [
+                "e2399d1825910c3b"
+            ],
+            [
+                "9d64acfbf17065cf"
+            ],
+            [
+                "a277da4e42949c66"
+            ],
+            [
+                "7d36f71aa18bb965"
+            ],
+            [
+                "3b7b59f75488680b"
+            ],
+            [
+                "f77419a78acd04c7"
+            ]
+        ]
+    },
+    {
+        "id": "e76fd58ea7ca1585",
+        "type": "debug",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "a729726b487280ec",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "func": "let RFID = msg.payload.RFID\nlet Waktu = msg.payload.Waktu\n//let Tipe = msg.payload.Tipe\nlet Berat = msg.payload.Berat\nlet Suhu = msg.payload.Suhu\nlet Sehat = msg.payload.Sehat\n//let Kesalahan = msg.payload.Kesalahan\n\nmsg.topic = `INSERT INTO lapangan (RFID, Waktu, Berat, Suhu, Sehat) VALUES ('${RFID}', '${Waktu}', '${Berat}', '${Suhu}', '${Sehat}')`\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 820,
+        "wires": [
+            [
+                "88bd1c2721a79358",
+                "dd34a28d29ae567b"
+            ]
+        ]
+    },
+    {
+        "id": "b2ca48e0241d53fd",
+        "type": "ui_form",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "label": "",
+        "group": "2391bd48f893f039",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "RFID",
+                "value": "RFID",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Waktu",
+                "value": "Waktu",
+                "type": "time",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Berat",
+                "value": "Berat",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Suhu",
+                "value": "Suhu",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Sehat",
+                "value": "Sehat",
+                "type": "text",
+                "required": false,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "RFID": "",
+            "Waktu": "",
+            "Berat": "",
+            "Suhu": "",
+            "Sehat": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 190,
+        "y": 820,
+        "wires": [
+            [
+                "a729726b487280ec"
+            ]
+        ]
+    },
+    {
+        "id": "88bd1c2721a79358",
+        "type": "mysql",
+        "z": "a474a45fb8e3907c",
+        "mydb": "a844720c.608d6",
+        "name": "Register",
+        "x": 500,
+        "y": 820,
+        "wires": [
+            [
+                "e76fd58ea7ca1585"
+            ]
+        ]
+    },
+    {
+        "id": "2f856a0ebe48e364",
+        "type": "catch",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "scope": [
+            "60af53c535ff7340"
+        ],
+        "uncaught": false,
+        "x": 170,
+        "y": 920,
+        "wires": [
+            [
+                "0c06a815cb7f75bb"
+            ]
+        ]
+    },
+    {
+        "id": "0c06a815cb7f75bb",
+        "type": "ui_toast",
+        "z": "a474a45fb8e3907c",
+        "position": "top right",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "No Data",
+        "x": 320,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "fc4674ffaa4f5dca",
+        "type": "link in",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "links": [
+            "975a8a12873fc279"
+        ],
+        "x": 155,
+        "y": 200,
+        "wires": [
+            [
+                "9d51283180659963",
+                "0e8ad6dfa3745879"
+            ]
+        ]
+    },
+    {
+        "id": "dd34a28d29ae567b",
+        "type": "debug",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "23211ae590cfbbc5",
+        "type": "ui_table",
+        "z": "a474a45fb8e3907c",
+        "group": "71b2f5b8a25c93bf",
+        "name": "",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 710,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "c14922160121dc33",
+        "type": "mysql",
+        "z": "a474a45fb8e3907c",
+        "mydb": "a844720c.608d6",
+        "name": "Data Table",
+        "x": 550,
+        "y": 640,
+        "wires": [
+            [
+                "23211ae590cfbbc5"
+            ]
+        ]
+    },
+    {
+        "id": "f8898547b4b24187",
+        "type": "comment",
+        "z": "a474a45fb8e3907c",
+        "name": "Select Data",
+        "info": "",
+        "x": 130,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "caa8a8912ab6bee3",
+        "type": "comment",
+        "z": "a474a45fb8e3907c",
+        "name": "Show Table",
+        "info": "",
+        "x": 170,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "76be5069ade54bb3",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "func": "let PPD = flow.get(\"PPD\");\nlet type = msg.payload;\n\nif (type==\"Semua\" && PPD==\"Semua\"){\n    msg.topic = `SELECT * FROM manajemen JOIN lapangan ON lapangan.RFID = manajemen.RFID`\n}\nelse if (type != \"All\"){\n    msg.topic = `SELECT * FROM qurban WHERE type=\"${type}\"`\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 640,
+        "wires": [
+            [
+                "c14922160121dc33"
+            ]
+        ]
+    },
+    {
+        "id": "2b83bf195023c2dc",
+        "type": "ui_dropdown",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "label": "Kategori Domba",
+        "tooltip": "",
+        "place": "",
+        "group": "71b2f5b8a25c93bf",
+        "order": 2,
+        "width": "24",
+        "height": "1",
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "Semua",
+                "value": "Semua",
+                "type": "str"
+            },
+            {
+                "label": "S",
+                "value": "S",
+                "type": "str"
+            },
+            {
+                "label": "AA1",
+                "value": "AA1",
+                "type": "str"
+            },
+            {
+                "label": "AA0",
+                "value": "AA0",
+                "type": "str"
+            },
+            {
+                "label": "A1",
+                "value": "A1",
+                "type": "str"
+            },
+            {
+                "label": "A0",
+                "value": "A0",
+                "type": "str"
+            },
+            {
+                "label": "B1",
+                "value": "B1",
+                "type": "str"
+            },
+            {
+                "label": "B0",
+                "value": "B0",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 180,
+        "y": 640,
+        "wires": [
+            [
+                "76be5069ade54bb3"
+            ]
+        ]
+    },
+    {
+        "id": "df119a443ab3c8f3",
+        "type": "ui_chart",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "group": "56f56db279f1c351",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "chart",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1230,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33f55d8a1fd3ee3b",
+        "type": "inject",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[{ \"series\": [\"A\", \"B\", \"C\"], \"data\": [     [{ \"x\": 1504029632890, \"y\": 5 },      { \"x\": 1504029636001, \"y\": 4 },      { \"x\": 1504029638656, \"y\": 2 }     ],     [{ \"x\": 1504029633514, \"y\": 6 },      { \"x\": 1504029636622, \"y\": 7 },      { \"x\": 1504029639539, \"y\": 6 }     ],     [{ \"x\": 1504029634400, \"y\": 7 },      { \"x\": 1504029637959, \"y\": 7 },      { \"x\": 1504029640317, \"y\": 7 }     ] ], \"labels\": [\"\"] }]",
+        "payloadType": "json",
+        "x": 1070,
+        "y": 200,
+        "wires": [
+            [
+                "df119a443ab3c8f3"
+            ]
+        ]
+    },
+    {
+        "id": "de41ec645ced9670",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Suhu",
+        "format": "{{msg.payload}} &degC",
+        "layout": "row-spread",
+        "className": "",
+        "x": 830,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e2399d1825910c3b",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 11,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Sehat",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 830,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "798ccc297e3065e3",
+        "type": "comment",
+        "z": "a474a45fb8e3907c",
+        "name": "Dummy Data lapangan",
+        "info": "",
+        "x": 200,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "0e8ad6dfa3745879",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "d": true,
+        "name": "",
+        "func": "let RFID = flow.get('RFID')\nmsg.topic = `SELECT * FROM manajemen WHERE RFID=\"${RFID}\"`;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 340,
+        "wires": [
+            [
+                "0e84f5c75d57c62e"
+            ]
+        ]
+    },
+    {
+        "id": "0e84f5c75d57c62e",
+        "type": "mysql",
+        "z": "a474a45fb8e3907c",
+        "mydb": "a844720c.608d6",
+        "name": "Data1",
+        "x": 430,
+        "y": 340,
+        "wires": [
+            [
+                "74cb534018bf4f7c"
+            ]
+        ]
+    },
+    {
+        "id": "74cb534018bf4f7c",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "func": "let Pequrban = msg.payload[0].Nama_Pequrban\nlet Kategori = msg.payload[0].Kategori\nlet PPD = msg.payload[0].Pengelola_Penyembelihan_dan_Distribusi\n\nreturn[{payload:Pequrban}, {payload:Kategori}, {payload:PPD}] \n",
+        "outputs": 3,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a277da4e42949c66",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Nama Pequrban",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 840,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "7d36f71aa18bb965",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Kategori",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 820,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "f77419a78acd04c7",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Pengelola Penyembelihan dan Distribusi",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 920,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "8a7b9198ed99a802",
+        "type": "comment",
+        "z": "a474a45fb8e3907c",
+        "name": "Dummy Data Management",
+        "info": "",
+        "x": 170,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "547e4cfad80f9587",
+        "type": "ui_form",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "label": "",
+        "group": "6fdfb1de320cf630",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Kode Pequrban",
+                "value": "Kode_Pequrban",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Nama Pequrban",
+                "value": "Nama_Pequrban",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "RFID",
+                "value": "RFID",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Kategori",
+                "value": "Kategori",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Rentang Berat",
+                "value": "Rentang_Berat",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Panegelola Penyembelihan dan Distribusi",
+                "value": "Pengelola_Penyembelihan_dan_Distribusi",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "Kode_Pequrban": "",
+            "Nama_Pequrban": "",
+            "RFID": "",
+            "Kategori": "",
+            "Rentang_Berat": "",
+            "Pengelola_Penyembelihan_dan_Distribusi": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 150,
+        "y": 1040,
+        "wires": [
+            [
+                "983188d7408503d2"
+            ]
+        ]
+    },
+    {
+        "id": "983188d7408503d2",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "func": "let KP = msg.payload.Kode_Pequrban\nlet NP = msg.payload.Nama_Pequrban\nlet RFID = msg.payload.RFID\nlet Kategori = msg.payload.Kategori\nlet RB = msg.payload.Rentang_Berat\nlet PPD = msg.payload.Pengelola_Penyembelihan_dan_Distribusi\n\nmsg.topic = `INSERT INTO manajemen (Kode_Pequrban, Nama_Pequrban, RFID, Kategori, Rentang_Berat, Pengelola_Penyembelihan_dan_Distribusi) VALUES ('${KP}', '${NP}', '${RFID}', '${Kategori}', '${RB}', '${PPD}')`\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 1040,
+        "wires": [
+            [
+                "c0e7a93654e96c7c",
+                "930e019e9dced13e"
+            ]
+        ]
+    },
+    {
+        "id": "c0e7a93654e96c7c",
+        "type": "mysql",
+        "z": "a474a45fb8e3907c",
+        "mydb": "a844720c.608d6",
+        "name": "Regisiter",
+        "x": 480,
+        "y": 1040,
+        "wires": [
+            [
+                "5ea61addfc5706db"
+            ]
+        ]
+    },
+    {
+        "id": "930e019e9dced13e",
+        "type": "debug",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 410,
+        "y": 1120,
+        "wires": []
+    },
+    {
+        "id": "5ea61addfc5706db",
+        "type": "debug",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 1040,
+        "wires": []
+    },
+    {
+        "id": "0247cb4bd1c1e5c8",
+        "type": "ui_form",
+        "z": "a474a45fb8e3907c",
+        "d": true,
+        "name": "",
+        "label": "",
+        "group": "71b2f5b8a25c93bf",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "PPD",
+                "value": "PPD",
+                "type": "text",
+                "required": false,
+                "rows": null
+            },
+            {
+                "label": "Kategori",
+                "value": "Kategori",
+                "type": "text",
+                "required": false,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "PPD": "",
+            "Kategori": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 150,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "17b9220bd7fcc115",
+        "type": "ui_button",
+        "z": "a474a45fb8e3907c",
+        "name": "Inform-type",
+        "group": "71b2f5b8a25c93bf",
+        "order": 4,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-question",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 390,
+        "y": 680,
+        "wires": [
+            [
+                "2d2d14f1435bdb82"
+            ]
+        ]
+    },
+    {
+        "id": "6f7e03abc2cd1d5f",
+        "type": "ui_toast",
+        "z": "a474a45fb8e3907c",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": true,
+        "className": "",
+        "topic": "",
+        "name": "Informasi",
+        "x": 680,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2d2d14f1435bdb82",
+        "type": "template",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<body>\n<style>\n        .tab1{\n            display: inline-block;\n            margin-left: 25px;\n        }\n        .tab2{\n            display: inline-block;\n            margin-left: 15px;\n        }\n</style>\n\n\n\n<h2>Kategori Domba</h2>\n<p>S <span class=\"tab1\"></span>: Domba Super bertanduk</p>\n<p>AA1 : Domba A+ bertanduk</p>\n<p>AA0 : Domba A+ tidak bertanduk</p>\n<p>A1<span class=\"tab2\"></span>: Domba A bertanduk</p>\n<p>A0<span class=\"tab2\"></span>: Domba A tidak bertanduk</p>\n<p>B1<span class=\"tab2\"></span>: Domba B bertanduk</p>\n<p>B0<span class=\"tab2\"></span>: Domba B tidak bertanduk</p>\n\n</body>\n</html>",
+        "output": "str",
+        "x": 540,
+        "y": 680,
+        "wires": [
+            [
+                "6f7e03abc2cd1d5f"
+            ]
+        ]
+    },
+    {
+        "id": "406954b3ead2eb3e",
+        "type": "ui_text_input",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "label": "PPD",
+        "tooltip": "",
+        "group": "71b2f5b8a25c93bf",
+        "order": 1,
+        "width": "24",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": "1000",
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 150,
+        "y": 580,
+        "wires": [
+            [
+                "3732f1b69b39125b"
+            ]
+        ]
+    },
+    {
+        "id": "3732f1b69b39125b",
+        "type": "change",
+        "z": "a474a45fb8e3907c",
+        "name": "Set Flow PPD",
+        "rules": [
+            {
+                "t": "set",
+                "p": "PPD",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 580,
+        "wires": [
+            [
+                "5c6a226a3f5f2dac"
+            ]
+        ]
+    },
+    {
+        "id": "5c6a226a3f5f2dac",
+        "type": "link out",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "mode": "link",
+        "links": [
+            "f1aa607afb4275e3"
+        ],
+        "x": 525,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "f1aa607afb4275e3",
+        "type": "link in",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "links": [
+            "5c6a226a3f5f2dac"
+        ],
+        "x": 255,
+        "y": 680,
+        "wires": [
+            [
+                "76be5069ade54bb3"
+            ]
+        ]
+    },
+    {
+        "id": "f4c8043f54a87483",
+        "type": "ui_button",
+        "z": "a474a45fb8e3907c",
+        "name": "Inform-PPD",
+        "group": "71b2f5b8a25c93bf",
+        "order": 3,
+        "width": "1",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-question",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "",
+        "topicType": "str",
+        "x": 390,
+        "y": 540,
+        "wires": [
+            [
+                "05d489c29fb62c1c"
+            ]
+        ]
+    },
+    {
+        "id": "90753b5bb6f520d8",
+        "type": "ui_toast",
+        "z": "a474a45fb8e3907c",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": true,
+        "className": "",
+        "topic": "",
+        "name": "Informasi",
+        "x": 680,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "05d489c29fb62c1c",
+        "type": "template",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<body>\n<style>\n        .tab1{\n            display: inline-block;\n            margin-left: 25px;\n        }\n        .tab2{\n            display: inline-block;\n            margin-left: 15px;\n        }\n</style>\n\n\n\n<h2>Pengelola Penyembelihan dan Distribusi</h2>\n<p>Semua : Semua PPD</p>\n<p>Isi dengan inisial nama pengelola qurban dalam huruf kapital, Contoh:</p>\n\n<p>RAS : Rumah Amal Salman</p>\n\n</body>\n</html>",
+        "output": "str",
+        "x": 540,
+        "y": 540,
+        "wires": [
+            [
+                "90753b5bb6f520d8"
+            ]
+        ]
+    },
+    {
+        "id": "982edaa66d776246",
+        "type": "comment",
+        "z": "a474a45fb8e3907c",
+        "name": "Lapangan-Kontrol",
+        "info": "",
+        "x": 150,
+        "y": 1260,
+        "wires": []
+    },
+    {
+        "id": "ec0e0f735ea24c49",
+        "type": "ui_svg_graphics",
+        "z": "a474a45fb8e3907c",
+        "group": "e7acb5d1eac34ba4",
+        "order": 2,
+        "width": "0",
+        "height": "0",
+        "svgString": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n   width=\"300\"\n   height=\"140\"\n   viewBox=\"0 0 165 84\"\n   version=\"1.1\"\n   id=\"svg5\"\n   inkscape:version=\"1.1 (c68e22c387, 2021-05-23)\"\n   sodipodi:docname=\"drawing.svg.2022_06_02_21_49_25.0.svg\"\n   xmlns:inkscape=\"http://www.inkscape.org/namespaces/inkscape\"\n   xmlns:sodipodi=\"http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n   xmlns=\"http://www.w3.org/2000/svg\"\n   xmlns:svg=\"http://www.w3.org/2000/svg\">\n  <sodipodi:namedview\n     id=\"namedview7\"\n     pagecolor=\"#ffffff\"\n     bordercolor=\"#666666\"\n     borderopacity=\"1.0\"\n     inkscape:pageshadow=\"2\"\n     inkscape:pageopacity=\"0.0\"\n     inkscape:pagecheckerboard=\"0\"\n     inkscape:document-units=\"px\"\n     showgrid=\"true\"\n     showguides=\"false\"\n     inkscape:zoom=\"1.2428876\"\n     inkscape:cx=\"364.07154\"\n     inkscape:cy=\"162.92704\"\n     inkscape:window-width=\"1920\"\n     inkscape:window-height=\"991\"\n     inkscape:window-x=\"-9\"\n     inkscape:window-y=\"-9\"\n     inkscape:window-maximized=\"1\"\n     inkscape:current-layer=\"layer2\"\n     height=\"1135px\"\n     borderlayer=\"false\"\n     scale-x=\"0.6\"\n     width=\"627px\">\n    <inkscape:grid\n       type=\"xygrid\"\n       id=\"grid2279\" />\n  </sodipodi:namedview>\n  <defs\n     id=\"defs2\" />\n  <g\n     inkscape:label=\"Sensor Suhu\"\n     inkscape:groupmode=\"layer\"\n     id=\"layer2\"\n     style=\"display:none\"\n     sodipodi:insensitive=\"true\">\n    <g\n       id=\"g500\"\n       transform=\"translate(-0.39854464,-0.52919325)\">\n      <g\n         id=\"g466\">\n        <g\n           id=\"g51900\"\n           transform=\"translate(-2.11664,-2.11664)\">\n          <g\n             id=\"g5972-9-4\">\n            <rect\n               style=\"fill:#097479;fill-opacity:0.898039;stroke-width:1.85208\"\n               id=\"rect31-0-5\"\n               width=\"164.17232\"\n               height=\"85.989586\"\n               x=\"2.5151846\"\n               y=\"2.6458333\" />\n            <image\n               width=\"13.229167\"\n               height=\"13.229167\"\n               preserveAspectRatio=\"none\"\n               xlink:href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABC0lE QVRoge3YTQ6CMBAF4KfxEP6cSOAKXkPWEo+lLiSu9DKCG1e4oI1aIBa0dDDvS5omMk3eQAOxABER ERH1LQKwB3ADUHgeucoStm1iKyB800hsm4jUgjuANYB527vgwBxAjDJTASCwWXRQxbG7XJ3FKLPt bIpzVTxzmaijKcpsmU2x3otSNeYb9xzEGTbimd5i6acCqVJUvy21pDfy6i3rULdWBRuRho1IM7RG TrB8s0p//ZrfkKO+MPGV6Esj84ehba1Gf9tIrmYJf3FNCzVf6y6ajZzVvHIWpzud6WJTHOJ5+BBD xpMxDx+WtgsT+D/2aRqbtnchQHlakQkIn6ks1k+CiIiIiH7rARlqyKr8knc0AAAAAElFTkSuQmCC  \"\n               id=\"image2301-6-8\"\n               x=\"150.8125\"\n               y=\"2.6458333\"\n               style=\"display:inline\" />\n            <rect\n               style=\"fill:#ffffff;fill-opacity:0.898039;stroke-width:1.85208\"\n               id=\"rect2337-0-8\"\n               width=\"9.2604027\"\n               height=\"5.2916675\"\n               x=\"152.66458\"\n               y=\"6.614583\" />\n          </g>\n          <text\n             xml:space=\"preserve\"\n             style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.2889px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264584\"\n             x=\"13.372056\"\n             y=\"20.536022\"\n             id=\"text7780-1-9\"\n             transform=\"scale(0.86822709,1.1517724)\"><tspan\n               sodipodi:role=\"line\"\n               id=\"tspan7778-5-9\"\n               style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.2889px;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264584\"\n               x=\"13.372056\"\n               y=\"20.536022\">Suhu</tspan></text>\n          <text\n             xml:space=\"preserve\"\n             style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.9333px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n             x=\"81.502342\"\n             y=\"56.657173\"\n             id=\"text13076-8-4\"><tspan\n               sodipodi:role=\"line\"\n               id=\"tspan35614-3\"\n               x=\"81.502342\"\n               y=\"56.657173\">37°C</tspan></text>\n          <text\n             xml:space=\"preserve\"\n             style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n             x=\"153.63187\"\n             y=\"10.583334\"\n             id=\"text18533-2-4\"><tspan\n               sodipodi:role=\"line\"\n               id=\"tspan18531-5-9\"\n               style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n               x=\"153.63187\"\n               y=\"10.583334\">100</tspan></text>\n        </g>\n      </g>\n    </g>\n  </g>\n  <g\n     inkscape:groupmode=\"layer\"\n     id=\"layer3\"\n     inkscape:label=\"Sensor Berat\"\n     style=\"display:none;opacity:1\"\n     sodipodi:insensitive=\"true\">\n    <g\n       id=\"g10061\">\n      <g\n         id=\"g5972-9-4-6\"\n         transform=\"translate(-2.5151846,-2.6458333)\">\n        <rect\n           style=\"fill:#097479;fill-opacity:0.898039;stroke-width:1.85208\"\n           id=\"rect31-0-5-2\"\n           width=\"164.17232\"\n           height=\"85.989586\"\n           x=\"2.5151846\"\n           y=\"2.6458333\" />\n        <image\n           width=\"13.229167\"\n           height=\"13.229167\"\n           preserveAspectRatio=\"none\"\n           xlink:href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABC0lE QVRoge3YTQ6CMBAF4KfxEP6cSOAKXkPWEo+lLiSu9DKCG1e4oI1aIBa0dDDvS5omMk3eQAOxABER ERH1LQKwB3ADUHgeucoStm1iKyB800hsm4jUgjuANYB527vgwBxAjDJTASCwWXRQxbG7XJ3FKLPt bIpzVTxzmaijKcpsmU2x3otSNeYb9xzEGTbimd5i6acCqVJUvy21pDfy6i3rULdWBRuRho1IM7RG TrB8s0p//ZrfkKO+MPGV6Esj84ehba1Gf9tIrmYJf3FNCzVf6y6ajZzVvHIWpzud6WJTHOJ5+BBD xpMxDx+WtgsT+D/2aRqbtnchQHlakQkIn6ks1k+CiIiIiH7rARlqyKr8knc0AAAAAElFTkSuQmCC  \"\n           id=\"image2301-6-8-8\"\n           x=\"150.8125\"\n           y=\"2.6458333\"\n           style=\"display:inline\" />\n        <rect\n           style=\"fill:#ffffff;fill-opacity:0.898039;stroke-width:1.85208\"\n           id=\"rect2337-0-8-7\"\n           width=\"9.2604027\"\n           height=\"5.2916675\"\n           x=\"152.66458\"\n           y=\"6.614583\" />\n      </g>\n      <text\n         xml:space=\"preserve\"\n         style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.2889px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264584\"\n         x=\"10.475136\"\n         y=\"18.238838\"\n         id=\"text7780-1-9-6\"\n         transform=\"scale(0.86822709,1.1517724)\"><tspan\n           sodipodi:role=\"line\"\n           id=\"tspan1295\"\n           x=\"10.475136\"\n           y=\"18.238838\">Berat</tspan></text>\n      <text\n         xml:space=\"preserve\"\n         style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.9333px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n         x=\"78.98716\"\n         y=\"54.011341\"\n         id=\"text13076-8-4-7\"><tspan\n           sodipodi:role=\"line\"\n           id=\"tspan2525\"\n           x=\"78.98716\"\n           y=\"54.011341\">30kg</tspan></text>\n      <text\n         xml:space=\"preserve\"\n         style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n         x=\"151.11668\"\n         y=\"7.9375005\"\n         id=\"text18533-2-4-1\"><tspan\n           sodipodi:role=\"line\"\n           id=\"tspan18531-5-9-1\"\n           style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n           x=\"151.11668\"\n           y=\"7.9375005\">100</tspan></text>\n    </g>\n  </g>\n  <g\n     inkscape:groupmode=\"layer\"\n     id=\"layer1\"\n     inkscape:label=\"Sensor RFID\"\n     style=\"display:inline\"\n     sodipodi:insensitive=\"true\">\n    <g\n       id=\"g10049\">\n      <g\n         id=\"g5972-9-4-7\"\n         transform=\"translate(-2.5151846,-2.6458333)\">\n        <rect\n           style=\"fill:#097479;fill-opacity:0.898039;stroke-width:1.85208\"\n           id=\"rect31-0-5-3\"\n           width=\"164.17232\"\n           height=\"85.989586\"\n           x=\"2.5151846\"\n           y=\"2.6458333\" />\n        <image\n           width=\"13.229167\"\n           height=\"13.229167\"\n           preserveAspectRatio=\"none\"\n           xlink:href=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAABC0lE QVRoge3YTQ6CMBAF4KfxEP6cSOAKXkPWEo+lLiSu9DKCG1e4oI1aIBa0dDDvS5omMk3eQAOxABER ERH1LQKwB3ADUHgeucoStm1iKyB800hsm4jUgjuANYB527vgwBxAjDJTASCwWXRQxbG7XJ3FKLPt bIpzVTxzmaijKcpsmU2x3otSNeYb9xzEGTbimd5i6acCqVJUvy21pDfy6i3rULdWBRuRho1IM7RG TrB8s0p//ZrfkKO+MPGV6Esj84ehba1Gf9tIrmYJf3FNCzVf6y6ajZzVvHIWpzud6WJTHOJ5+BBD xpMxDx+WtgsT+D/2aRqbtnchQHlakQkIn6ks1k+CiIiIiH7rARlqyKr8knc0AAAAAElFTkSuQmCC  \"\n           id=\"image2301-6-8-4\"\n           x=\"150.8125\"\n           y=\"2.6458333\"\n           style=\"display:inline\" />\n        <rect\n           style=\"fill:#ffffff;fill-opacity:0.898039;stroke-width:1.85208\"\n           id=\"rect2337-0-8-9\"\n           width=\"9.2604027\"\n           height=\"5.2916675\"\n           x=\"152.66458\"\n           y=\"6.614583\" />\n      </g>\n      <text\n         xml:space=\"preserve\"\n         style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:11.2889px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264584\"\n         x=\"10.475136\"\n         y=\"18.238838\"\n         id=\"text7780-1-9-65\"\n         transform=\"scale(0.86822709,1.1517724)\"><tspan\n           sodipodi:role=\"line\"\n           id=\"tspan10017\"\n           x=\"10.475136\"\n           y=\"18.238838\">Kode Pequrban</tspan></text>\n      <text\n         xml:space=\"preserve\"\n         style=\"font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16.9333px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Normal';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n         x=\"78.98716\"\n         y=\"54.011341\"\n         id=\"text13076-8-4-2\"><tspan\n           sodipodi:role=\"line\"\n           id=\"tspan10037\"\n           x=\"78.98716\"\n           y=\"54.011341\">D-001</tspan></text>\n      <text\n         xml:space=\"preserve\"\n         style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;line-height:1.25;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n         x=\"151.11668\"\n         y=\"7.9375005\"\n         id=\"text18533-2-4-4\"><tspan\n           sodipodi:role=\"line\"\n           id=\"tspan18531-5-9-3\"\n           style=\"font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.52778px;font-family:Verdana;-inkscape-font-specification:'Verdana, Bold';font-variant-ligatures:none;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000;fill-opacity:1;stroke-width:0.264583\"\n           x=\"151.11668\"\n           y=\"7.9375005\">100</tspan></text>\n    </g>\n  </g>\n</svg>\n",
+        "clickableShapes": [],
+        "javascriptHandlers": [],
+        "smilAnimations": [],
+        "bindings": [],
+        "showCoordinates": false,
+        "autoFormatAfterEdit": false,
+        "showBrowserErrors": false,
+        "showBrowserEvents": false,
+        "enableJsDebugging": false,
+        "sendMsgWhenLoaded": false,
+        "noClickWhenDblClick": false,
+        "outputField": "payload",
+        "editorUrl": "//drawsvg.org/drawsvg.html",
+        "directory": "",
+        "panning": "disabled",
+        "zooming": "disabled",
+        "panOnlyWhenZoomed": false,
+        "doubleClickZoomEnabled": false,
+        "mouseWheelZoomEnabled": false,
+        "dblClickZoomPercentage": 150,
+        "cssString": "div.ui-svg svg{\n    color: var(--nr-dashboard-widgetColor);\n    fill: currentColor !important;\n}\ndiv.ui-svg path {\n    fill: inherit;\n}",
+        "name": "",
+        "x": 580,
+        "y": 1460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ddab804851296a69",
+        "type": "ui_button",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "group": "e7acb5d1eac34ba4",
+        "order": 6,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Sebelumnya",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "-1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 1540,
+        "wires": [
+            [
+                "0b90d791a1712147"
+            ]
+        ]
+    },
+    {
+        "id": "817e610d91809d90",
+        "type": "ui_button",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "group": "e7acb5d1eac34ba4",
+        "order": 4,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Kirim",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 1500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39ed9a653c516125",
+        "type": "ui_button",
+        "z": "a474a45fb8e3907c",
+        "name": "Scan",
+        "group": "e7acb5d1eac34ba4",
+        "order": 7,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "fa-circle-o",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 1580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7ae09fdf8cdc38d",
+        "type": "ui_button",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "group": "e7acb5d1eac34ba4",
+        "order": 8,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Selanjutnya",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "num",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 110,
+        "y": 1620,
+        "wires": [
+            [
+                "0b90d791a1712147"
+            ]
+        ]
+    },
+    {
+        "id": "a9037fe403ec53b0",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "name": "Battery",
+        "func": "let battery = msg.payload;\nlet indicator = battery/100*9.2604027;\nlet color = \"white\";\nif (battery<30){\n    color = \"red\";\n}\nelse if(battery<50){\n    color = \"orange\";\n}\n\n\nmsg = {payload: [\n    {\"command\":\"update_text\",\n    \"selector\":`#tspan18531-5-9-3, #tspan18531-5-9, #tspan18531-5-9-1`,\n    \"textContent\":`${battery}`},\n    {\"command\":\"update_style\",\n    \"selector\":`#rect2337-0-8-9, #rect2337-0-8, #rect2337-0-8-7`,\n    \"style\":{\"width\":`${indicator}`, \"fill\": `${color}`}}\n    ]}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 1460,
+        "wires": [
+            [
+                "ec0e0f735ea24c49"
+            ]
+        ]
+    },
+    {
+        "id": "8f3127cfe811be78",
+        "type": "ui_slider",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "label": "Baterai",
+        "tooltip": "",
+        "group": "e7acb5d1eac34ba4",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "all",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": 0,
+        "max": "100",
+        "step": 1,
+        "className": "",
+        "x": 260,
+        "y": 1320,
+        "wires": [
+            [
+                "a9037fe403ec53b0"
+            ]
+        ]
+    },
+    {
+        "id": "0b90d791a1712147",
+        "type": "function",
+        "z": "a474a45fb8e3907c",
+        "name": "UI",
+        "func": "\nlet layer1 = \"none\"\nlet layer2 = 'none'\nlet layer3 = \"none\"\nlet layer = flow.get(\"layer\");\nlayer += msg.payload;\n\nif (layer>3){\n    layer = 1;\n}\nelse if (layer<1){\n    layer = 3\n} \nflow.set(\"layer\", layer);\n\n\nif (layer == 1){\n    layer1 = 'inline';\n} else if (layer == 2){\n    layer2 = 'inline';\n} else if (layer == 3){\n    layer3 = 'inline';\n}\n\nmsg = {payload: \n    [{'command': 'set_style',\n    'selector': '#layer1',\n    'attributeName': 'display',\n    'attributeValue': `${layer1}`},\n    {'command': 'set_style',\n    'selector': '#layer2',\n    'attributeName': 'display',\n    'attributeValue': `${layer2}`},\n    {'command': 'set_style',\n    'selector': '#layer3',\n    'attributeName': 'display',\n    'attributeValue': `${layer3}`}\n]}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 1500,
+        "wires": [
+            [
+                "edf8947180732282",
+                "ec0e0f735ea24c49"
+            ]
+        ]
+    },
+    {
+        "id": "edf8947180732282",
+        "type": "debug",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 550,
+        "y": 1540,
+        "wires": []
+    },
+    {
+        "id": "5ca1f4c169b43475",
+        "type": "inject",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "x": 890,
+        "y": 1320,
+        "wires": [
+            [
+                "3b7d3476fae0911d",
+                "675be517053a0280"
+            ]
+        ]
+    },
+    {
+        "id": "3b7d3476fae0911d",
+        "type": "change",
+        "z": "a474a45fb8e3907c",
+        "d": true,
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "layer",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1070,
+        "y": 1320,
+        "wires": [
+            [
+                "88ebf451e71a2902"
+            ]
+        ]
+    },
+    {
+        "id": "88ebf451e71a2902",
+        "type": "debug",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1250,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "675be517053a0280",
+        "type": "change",
+        "z": "a474a45fb8e3907c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "layer",
+                "tot": "flow"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1082.22216796875,
+        "y": 1372.6666259765625,
+        "wires": [
+            [
+                "88ebf451e71a2902"
+            ]
+        ]
+    },
+    {
+        "id": "3b7b59f75488680b",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Rentang Berat",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 840,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "9d64acfbf17065cf",
+        "type": "ui_text",
+        "z": "a474a45fb8e3907c",
+        "group": "ea3baa288a1b556d",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Kode Pequrban",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 840,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "2b25ea6b3e66b6bf",
+        "type": "ui_spacer",
+        "z": "a474a45fb8e3907c",
+        "name": "spacer",
+        "group": "8f180e03725f8647",
+        "order": 1,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "214e78a2d7239496",
+        "type": "ui_spacer",
+        "z": "a474a45fb8e3907c",
+        "name": "spacer",
+        "group": "e7acb5d1eac34ba4",
+        "order": 3,
+        "width": "2",
+        "height": "1"
+    },
+    {
+        "id": "3dc855558ddbfec5",
+        "type": "ui_spacer",
+        "z": "a474a45fb8e3907c",
+        "name": "spacer",
+        "group": "e7acb5d1eac34ba4",
+        "order": 5,
+        "width": "2",
+        "height": "1"
+    },
+    {
+        "id": "eea920ce048735fb",
+        "type": "ui_spacer",
+        "z": "a474a45fb8e3907c",
+        "name": "spacer",
+        "group": "e7acb5d1eac34ba4",
+        "order": 9,
+        "width": "6",
+        "height": "1"
+    },
+    {
+        "id": "ea3baa288a1b556d",
+        "type": "ui_group",
+        "name": "Data",
+        "tab": "b36efdeb3d4ee30f",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a844720c.608d6",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "test",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "2391bd48f893f039",
+        "type": "ui_group",
+        "name": "Dummy Data Lapangan",
+        "tab": "81077d9696166b47",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "71b2f5b8a25c93bf",
+        "type": "ui_group",
+        "name": "Data",
+        "tab": "cd8d972506078575",
+        "order": 2,
+        "disp": true,
+        "width": "25",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "56f56db279f1c351",
+        "type": "ui_group",
+        "name": "Display",
+        "tab": "b36efdeb3d4ee30f",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "6fdfb1de320cf630",
+        "type": "ui_group",
+        "name": "Dummy Data Manajemen",
+        "tab": "cd8d972506078575",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "e7acb5d1eac34ba4",
+        "type": "ui_group",
+        "name": "Kontrol",
+        "tab": "81077d9696166b47",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "8f180e03725f8647",
+        "type": "ui_group",
+        "name": "About",
+        "tab": "2f8e448127025252",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "b36efdeb3d4ee30f",
+        "type": "ui_tab",
+        "name": "Pencarian",
+        "icon": "fa-search",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "81077d9696166b47",
+        "type": "ui_tab",
+        "name": "Lapangan",
+        "icon": "fa-thermometer-half",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "cd8d972506078575",
+        "type": "ui_tab",
+        "name": "Manajemen",
+        "icon": "fa-folder",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "2f8e448127025252",
+        "type": "ui_tab",
+        "d": true,
+        "name": "Home",
+        "icon": "fa-home",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
